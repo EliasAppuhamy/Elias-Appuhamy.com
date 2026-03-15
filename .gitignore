@@ -1,0 +1,36 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next
+/out
+
+# vercel
+/.vercel
+
+# env files
+.env
+.env.local
+.env.production
+.env.development
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# system
+.DS_Store
+Thumbs.db
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# local reference / scratch files
+reference-michaelwolz.html
+reference-michaelwolz.css
+reference-michaelwolz.js
+EliasAppuhamy.jpeg
