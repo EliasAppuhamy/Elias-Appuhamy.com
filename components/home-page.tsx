@@ -1,23 +1,25 @@
-"use client";
-
 import Image from "next/image";
 import workImage from "@/public/images/elias-appuhamy-work.jpeg";
 import portraitSquareImage from "@/public/images/elias-appuhamy-portrait-square.jpeg";
 import { ContactForm } from "@/components/contact-form";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
-import { useLocale } from "@/components/locale-provider";
 import { SectionHeading } from "@/components/section-heading";
 import { Iconify } from "@/components/ui/iconify";
 import { Reveal } from "@/components/ui/reveal";
+import type { Locale, TranslationDictionary } from "@/lib/translations";
 
-export function HomePage() {
-  const { dictionary } = useLocale();
+type HomePageProps = {
+  locale: Locale;
+  dictionary: TranslationDictionary;
+};
+
+export function HomePage({ locale, dictionary }: HomePageProps) {
   const home = dictionary.home;
 
   return (
     <>
-      <Navbar />
+      <Navbar nav={dictionary.nav} />
 
       <main className="px-4 pb-20">
         <section id="hero" className="anchor-section flex min-h-screen flex-col items-center pt-32">
@@ -314,7 +316,7 @@ export function HomePage() {
                   {home.connect.formCopy}
                 </p>
                 <div className="mt-8">
-                  <ContactForm />
+                  <ContactForm form={dictionary.form} />
                 </div>
               </div>
             </Reveal>
@@ -352,7 +354,7 @@ export function HomePage() {
         </section>
       </main>
 
-      <Footer />
+      <Footer locale={locale} footer={dictionary.footer} />
     </>
   );
 }

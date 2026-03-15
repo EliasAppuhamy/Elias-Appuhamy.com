@@ -1,18 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { useLocale } from "@/components/locale-provider";
 import { cn } from "@/lib/utils";
+import type { TranslationDictionary } from "@/lib/translations";
 
 const sectionIds = ["hero", "about", "expertise", "connect"] as const;
 
-export function Navbar() {
-  const { dictionary } = useLocale();
+type NavbarProps = {
+  nav: TranslationDictionary["nav"];
+};
+
+export function Navbar({ nav }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
-  const navItems = dictionary.nav.links;
+  const navItems = nav.links.filter((item) => item.id !== "connect");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -86,13 +88,13 @@ export function Navbar() {
             </a>
           ))}
           <a href="#connect" className="btn-glass">
-            {dictionary.nav.cta}
+            {nav.cta}
           </a>
         </div>
 
         <button
           type="button"
-          aria-label={menuOpen ? dictionary.nav.closeMenu : dictionary.nav.openMenu}
+          aria-label={menuOpen ? nav.closeMenu : nav.openMenu}
           onClick={() => setMenuOpen((current) => !current)}
           className="p-2 text-white transition active:scale-90 md:hidden"
         >
@@ -113,45 +115,40 @@ export function Navbar() {
         </button>
       </nav>
 
-      <AnimatePresence>
-        {menuOpen ? (
-          <motion.div
-            initial={{ x: "-100%", opacity: 0.85 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "-100%", opacity: 0.85 }}
-            transition={{ duration: 0.28, ease: "easeOut" }}
-            className="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-8 bg-black/95 text-xl font-medium text-white backdrop-blur-2xl md:hidden"
+      <div
+        className={cn(
+          "fixed inset-0 z-[60] flex flex-col items-center justify-center gap-8 bg-black/95 text-xl font-medium text-white backdrop-blur-2xl transition-all duration-300 md:hidden",
+          menuOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0 pointer-events-none"
+        )}
+      >
+        {navItems.map((item) => (
+          <a key={item.id} href={item.href} className="transition hover:text-brand" onClick={() => setMenuOpen(false)}>
+            {item.label}
+          </a>
+        ))}
+        <a href="#connect" className="btn-glass" onClick={() => setMenuOpen(false)}>
+          {nav.cta}
+        </a>
+        <button
+          type="button"
+          onClick={() => setMenuOpen(false)}
+          className="glass absolute right-6 top-6 rounded-full p-2 hover:bg-white/10"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="size-6"
           >
-            {navItems.map((item) => (
-              <a key={item.id} href={item.href} className="transition hover:text-brand" onClick={() => setMenuOpen(false)}>
-                {item.label}
-              </a>
-            ))}
-            <a href="#connect" className="btn-glass" onClick={() => setMenuOpen(false)}>
-              {dictionary.nav.cta}
-            </a>
-            <button
-              type="button"
-              onClick={() => setMenuOpen(false)}
-              className="glass absolute right-6 top-6 rounded-full p-2 hover:bg-white/10"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="size-6"
-              >
-                <path d="M18 6 6 18" />
-                <path d="m6 6 12 12" />
-              </svg>
-            </button>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+      </div>
     </>
   );
 }

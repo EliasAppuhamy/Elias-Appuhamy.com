@@ -1,11 +1,13 @@
-"use client";
-
 import Link from "next/link";
-import { useLocale } from "@/components/locale-provider";
 import { siteConfig } from "@/lib/site";
+import type { Locale, TranslationDictionary } from "@/lib/translations";
 
-export function Footer() {
-  const { dictionary, locale } = useLocale();
+type FooterProps = {
+  locale: Locale;
+  footer: TranslationDictionary["footer"];
+};
+
+export function Footer({ locale, footer }: FooterProps) {
   const year = new Date().getFullYear();
   const legalHref = locale === "en" ? "/en/impressum" : "/impressum";
   const privacyHref = locale === "en" ? "/en/datenschutz" : "/datenschutz";
@@ -21,10 +23,10 @@ export function Footer() {
             {siteConfig.email}
           </a>
           <Link className="transition hover:text-white" href={legalHref}>
-            {dictionary.footer.legalNotice}
+            {footer.legalNotice}
           </Link>
           <Link className="transition hover:text-white" href={privacyHref}>
-            {dictionary.footer.privacyPolicy}
+            {footer.privacyPolicy}
           </Link>
         </div>
       </div>

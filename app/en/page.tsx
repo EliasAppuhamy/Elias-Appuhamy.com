@@ -3,6 +3,7 @@ import { HomePage } from "@/components/home-page";
 import { LocaleProvider } from "@/components/locale-provider";
 import { createMetadata } from "@/lib/seo";
 import { createHomeSchema } from "@/lib/schema";
+import { translations } from "@/lib/translations";
 
 export const metadata = createMetadata({
   title: "Elias Appuhamy (Elyon) | Official Website",
@@ -18,7 +19,7 @@ export default function EnglishPage() {
       <Script id="home-schema-en" type="application/ld+json">
         {JSON.stringify(createHomeSchema("en"))}
       </Script>
-      <HomePage />
+      <HomePage locale="en" dictionary={translations.en} />
     </LocaleProvider>
   );
 }

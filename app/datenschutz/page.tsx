@@ -2,6 +2,7 @@ import { LegalContent } from "@/components/legal-pages";
 import { LocaleProvider } from "@/components/locale-provider";
 import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
+import { translations } from "@/lib/translations";
 
 export const metadata = createMetadata({
   title: "Datenschutz",
@@ -13,7 +14,7 @@ export const metadata = createMetadata({
 export default function DatenschutzPage() {
   return (
     <LocaleProvider initialLocale="de">
-      <LegalContent kind="privacy" />
+      <LegalContent kind="privacy" locale="de" legal={translations.de.legal} footer={translations.de.footer} />
     </LocaleProvider>
   );
 }

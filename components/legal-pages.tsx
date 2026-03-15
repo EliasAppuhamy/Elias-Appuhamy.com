@@ -1,16 +1,15 @@
-"use client";
-
 import Link from "next/link";
-import { useLocale } from "@/components/locale-provider";
 import { Footer } from "@/components/footer";
+import type { Locale, TranslationDictionary } from "@/lib/translations";
 
 type LegalContentProps = {
   kind: "notice" | "privacy";
+  locale: Locale;
+  legal: TranslationDictionary["legal"];
+  footer: TranslationDictionary["footer"];
 };
 
-export function LegalContent({ kind }: LegalContentProps) {
-  const { dictionary, locale } = useLocale();
-  const legal = dictionary.legal;
+export function LegalContent({ kind, locale, legal, footer }: LegalContentProps) {
   const title = kind === "notice" ? legal.noticeTitle : legal.privacyTitle;
   const sections = kind === "notice" ? legal.noticeSections : legal.privacySections;
   const homeHref = locale === "en" ? "/en" : "/";
@@ -41,7 +40,7 @@ export function LegalContent({ kind }: LegalContentProps) {
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer locale={locale} footer={footer} />
     </>
   );
 }

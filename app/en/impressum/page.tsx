@@ -2,6 +2,7 @@ import { LegalContent } from "@/components/legal-pages";
 import { LocaleProvider } from "@/components/locale-provider";
 import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
+import { translations } from "@/lib/translations";
 
 export const metadata = createMetadata({
   title: "Legal Notice",
@@ -13,7 +14,7 @@ export const metadata = createMetadata({
 export default function EnglishImpressumPage() {
   return (
     <LocaleProvider initialLocale="en">
-      <LegalContent kind="notice" />
+      <LegalContent kind="notice" locale="en" legal={translations.en.legal} footer={translations.en.footer} />
     </LocaleProvider>
   );
 }

@@ -1,17 +1,8 @@
 "use client";
 
-import { createContext, useContext, useEffect, type ReactNode } from "react";
-import { motion } from "framer-motion";
+import { useEffect, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { translations, type Locale, type TranslationDictionary } from "@/lib/translations";
-
-type LocaleContextValue = {
-  locale: Locale;
-  switchLocale: (locale: Locale) => void;
-  dictionary: TranslationDictionary;
-};
-
-const LocaleContext = createContext<LocaleContextValue | null>(null);
+import type { Locale } from "@/lib/translations";
 
 type LocaleProviderProps = {
   children: ReactNode;
@@ -46,37 +37,28 @@ export function LocaleProvider({ children, initialLocale }: LocaleProviderProps)
   };
 
   return (
-    <LocaleContext.Provider
-      value={{ locale: initialLocale, switchLocale, dictionary: translations[initialLocale] }}
-    >
+    <>
       {children}
-      <LanguageSwitcher />
-    </LocaleContext.Provider>
+      <LanguageSwitcher locale={initialLocale} onSwitchLocale={switchLocale} />
+    </>
   );
 }
 
-export function useLocale() {
-  const context = useContext(LocaleContext);
+type LanguageSwitcherProps = {
+  locale: Locale;
+  onSwitchLocale: (locale: Locale) => void;
+};
 
-  if (!context) {
-    throw new Error("useLocale must be used within a LocaleProvider");
-  }
-
-  return context;
-}
-
-function LanguageSwitcher() {
-  const { locale, switchLocale } = useLocale();
+function LanguageSwitcher({ locale, onSwitchLocale }: LanguageSwitcherProps) {
 
   return (
     <div className="fixed bottom-4 left-4 z-[80]">
       <div className="rounded-full border border-white/10 bg-black/75 p-1 shadow-[0_18px_60px_rgba(0,0,0,0.38)] backdrop-blur-xl">
         <div className="relative grid w-[7.5rem] grid-cols-2 gap-1">
-          <motion.span
+          <span
             aria-hidden="true"
-            className="absolute inset-y-0 left-0 w-[calc(50%-0.125rem)] rounded-full bg-white shadow-[0_10px_24px_rgba(255,255,255,0.14)]"
-            animate={{ x: locale === "de" ? "0%" : "100%" }}
-            transition={{ type: "spring", stiffness: 420, damping: 32 }}
+            className="absolute inset-y-0 left-0 w-[calc(50%-0.125rem)] rounded-full bg-white shadow-[0_10px_24px_rgba(255,255,255,0.14)] transition-transform duration-300 ease-out"
+            style={{ transform: `translateX(${locale === "de" ? "0%" : "100%"})` }}
           />
 
           {(["de", "en"] as const).map((value) => {
@@ -86,7 +68,7 @@ function LanguageSwitcher() {
               <button
                 key={value}
                 type="button"
-                onClick={() => switchLocale(value)}
+                onClick={() => onSwitchLocale(value)}
                 className={`relative z-10 inline-flex h-10 items-center justify-center rounded-full text-sm font-semibold transition ${
                   active ? "text-black" : "text-white/78 hover:text-white"
                 }`}
