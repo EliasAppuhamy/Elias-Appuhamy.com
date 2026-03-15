@@ -11,8 +11,7 @@ export function ContactForm() {
 
   return (
     <form action={siteConfig.formspreeEndpoint} method="POST" className="space-y-5">
-      {/* TODO: Formspree Endpoint ersetzen */}
-      <input type="hidden" name="_subject" value="New message from elias-appuhamy.de" />
+      <input type="hidden" name="_subject" value="New message from elias-appuhamy.com" />
 
       <div className="space-y-2">
         <label htmlFor="contact-name" className="block pl-1 text-sm font-medium text-muted">

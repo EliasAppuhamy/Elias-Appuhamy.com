@@ -6,7 +6,7 @@ export const siteConfig = {
   role: "Founder & CEO",
   location: "Mettmann, North Rhine-Westphalia, Germany",
   email: "elias@elyon-web.de",
-  siteUrl: "https://www.elyon-web.de",
+  siteUrl: "https://elias-appuhamy.com",
   ogImage: "/images/elias-appuhamy-work.jpeg",
   defaultLocale: "de",
   locales: ["de", "en"],
@@ -17,8 +17,7 @@ export const siteConfig = {
   socialLinks: {
     instagram: "https://www.instagram.com/elyon.build"
   },
-  // TODO: Replace this with your live Formspree endpoint before publishing.
-  formspreeEndpoint: "https://formspree.io/f/REPLACE_THIS_WITH_YOUR_FORM_ID",
+  formspreeEndpoint: "https://formspree.io/f/xbdavylj",
   keywords: [
     "Elias Appuhamy",
     "Elias Appuhamy Elyon",
