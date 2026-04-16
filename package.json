@@ -11,6 +11,7 @@
   "dependencies": {
     "@iconify-icons/simple-icons": "^1.2.74",
     "@iconify-icons/solar": "^1.2.3",
+    "@vercel/analytics": "^2.0.1",
     "autoprefixer": "^10.4.21",
     "clsx": "^2.1.1",
     "next": "^15.5.12",

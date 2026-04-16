@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
+import { Analytics } from '@vercel/analytics/next';
 import { Providers } from "@/components/providers";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
@@ -94,6 +95,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="absolute bottom-[-10rem] left-1/3 h-[22rem] w-[22rem] rounded-full bg-[#16a34a]/12 blur-[120px]" />
         </div>
         <Providers>{children}</Providers>
+        <Analytics />
       </body>
     </html>
   );
